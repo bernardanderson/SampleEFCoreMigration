@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SampleEFCoreMigration.DAL;
 using Microsoft.EntityFrameworkCore;
+using SampleEFCoreMigration.Models;
 
 namespace SampleEFCoreMigration
 {
@@ -37,12 +38,13 @@ namespace SampleEFCoreMigration
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, SampleEFCoreMigrationContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            DbInitializer.Initialize(context);
         }
     }
 }
